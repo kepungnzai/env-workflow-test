@@ -1,0 +1,19 @@
+name: Simple Env Workflow
+
+on:
+  workflow_call:
+    inputs:
+      target_env:
+        required: true
+        type: string
+
+jobs:
+  echo-env-vars:
+    runs-on: ubuntu-latest
+    # ✅ This is key: assign the job to an environment to access its vars/secrets
+    environment: ${{ inputs.target_env }}
+
+    steps:
+      - name: Output environment name and variable
+        run: |
+          echo "DEBUG_FLAG (from env vars): ${{ vars.TEST_NAME }}"

@@ -23,4 +23,4 @@ jobs:
         uses: ./.github/workflows/wf2.yml@main
         with:
           environment: ${{ inputs.env }}
-          person_name: ${{ inputs.name }}
+          person_name: ${{ vars.TEST_NAME }}
