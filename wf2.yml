@@ -1,5 +1,4 @@
 name: Reusable Greeting Workflow
-
 on:
   workflow_call:
     inputs:
@@ -9,11 +8,16 @@ on:
         type: string
       environment:
         type: string
-        required: true  # name of GH environment (dev/test/prod)  
+        required: true
+
 jobs:
   greet:
     environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Say hello
-        run: echo "Hello, ${{ vars.TEST_NAME }}!"
+        run: |
+          # Now the input is passed from the caller
+          echo "Hello, ${{ inputs.person_name }}!"
+          # Environment secrets/variables are accessible here in the job's shell
+          echo "Also, TEST_NAME from the environment is: $TEST_NAME"

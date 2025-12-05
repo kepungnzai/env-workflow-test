@@ -1,22 +1,20 @@
 name: Caller Workflow
-
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
-  # This wrapper job sets the environment context
-  setup-and-call:
+  # This job is associated with the "dev" environment
+  prepare-and-call:
     runs-on: ubuntu-latest
-    environment: "dev"  # This gives access to dev environment variables
-    
+    environment: dev # This gives the job access to the "dev" environment's secrets/variables
     steps:
-      - name: Debug - Show available variables
+      - name: Pass variable to reusable workflow
+        # This step runs in the 'dev' context, so $TEST_NAME is available
         run: |
-          echo "Environment: ${{ vars.TEST_NAME }}"
+          echo "The value from 'dev' environment is: $TEST_NAME"
       
       - name: Call reusable workflow
-        # Now we can pass the environment variable as input
-        uses: ./.github/workflows/wf.yml
+        # You must pass the value as an explicit input
+        uses: ./.github/workflows/wf2.yml
         with:
-          person_name: ${{ env.TEST_NAME }}  # Use env. not vars.
+          person_name: ${{ env.TEST_NAME }} # Use env., not vars.
           environment: "dev"
