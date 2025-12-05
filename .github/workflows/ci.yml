@@ -5,6 +5,7 @@ on:
 
 jobs:
   call-reusable:
+    environment: dev
     uses: ./.github/workflows/wf.yml
     with:
       person_name: ${{ vars.TEST_NAME}}
