@@ -7,9 +7,13 @@ on:
         description: "Name of the person"
         required: true
         type: string
-
+      environment:
+        type: string
+        required: true  # name of GH environment (dev/test/prod)
+        
 jobs:
   greet:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Say hello
