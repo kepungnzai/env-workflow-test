@@ -6,7 +6,6 @@ on:
 jobs:
   call-reusable:
     uses: ./.github/workflows/wf.yml
-    environment: dev
     with:
       person_name: ${{ env.TEST_NAME}}
       environment: "dev"
