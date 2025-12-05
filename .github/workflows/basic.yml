@@ -1,7 +1,7 @@
 name: Simple Env Workflow
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       target_env:
         required: true
