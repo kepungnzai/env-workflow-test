@@ -8,9 +8,6 @@ jobs:
     environment: "dev"
     
     steps:
-      - name: Check environment variable
-        run: echo "TEST_NAME is: $TEST_NAME"
-        
       - name: Call reusable workflow
         uses: ./.github/workflows/wf.yml
         with:
