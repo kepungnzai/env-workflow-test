@@ -1,20 +1,26 @@
-name: Caller Workflow
-on: workflow_dispatch
+name: Call Reusable
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        type: choice
+        required: true
+        options: [dev, test, prod]
+      name:
+        type: string
+        required: true
 
 jobs:
-  # This job is associated with the "dev" environment
-  prepare-and-call:
+  call-reusable:
     runs-on: ubuntu-latest
-    environment: dev # This gives the job access to the "dev" environment's secrets/variables
+
+    # ❌ Do NOT put "environment:" here for reusable workflow logic.
+    # It protects the CALLER job only — not the reusable workflow’s job.
+
     steps:
-      - name: Pass variable to reusable workflow
-        # This step runs in the 'dev' context, so $TEST_NAME is available
-        run: |
-          echo "The value from 'dev' environment is: $TEST_NAME"
-      
-      - name: Call reusable workflow
-        # You must pass the value as an explicit input
+      - name: Call the reusable workflow
         uses: ./.github/workflows/wf2.yml
         with:
-          person_name: ${{ env.TEST_NAME }} # Use env., not vars.
-          environment: "dev"
+          environment: ${{ inputs.env }}
+          person_name: ${{ inputs.name }}

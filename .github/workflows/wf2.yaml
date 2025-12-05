@@ -1,0 +1,29 @@
+name: Reusable Greeting Workflow
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "GitHub environment to target (dev/test/prod)"
+        required: true
+        type: string
+      person_name:
+        required: true
+        type: string
+
+jobs:
+  greet:
+    # 🔥 This is the key: the JOB uses the environment input
+    environment: ${{ inputs.environment }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print greeting
+        run: |
+          echo "Hello, ${{ inputs.person_name }}"
+
+      - name: Show environment vars
+        run: |
+          echo "ENV VAR test = ${{ vars.test }}"      # environment-specific variable
+          echo "ENV SECRET password = ${{ secrets.PASSWORD }}"  # environment secret
