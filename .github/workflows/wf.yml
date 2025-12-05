@@ -18,4 +18,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Say hello
-        run: echo "Hello, ${{ inputs.person_name }}!"
+        run: echo "Hello, ${{ vars.TEST_NAME }}!"
