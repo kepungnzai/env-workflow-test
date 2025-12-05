@@ -1,12 +1,19 @@
 name: Caller Workflow
-
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   call-reusable:
-    uses: ./.github/workflows/wf.yml
-    environment: dev
-    with:
-      person_name: ${{ vars.TEST_NAME}}
-      environment: "dev"
+    runs-on: ubuntu-latest
+    # MUST set the environment to access its variables
+    environment: "dev"
+    
+    steps:
+      - name: Check environment variable
+        run: echo "TEST_NAME is: $TEST_NAME"
+        
+      - name: Call reusable workflow
+        uses: ./.github/workflows/wf.yml
+        with:
+          # Access as env.TEST_NAME (from the 'dev' environment)
+          person_name: ${{ env.TEST_NAME }}
+          environment: "dev"
