@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Call the reusable workflow
-        uses: ./.github/workflows/wf2.yml
+        uses: ./.github/workflows/wf2.yml@main
         with:
           environment: ${{ inputs.env }}
           person_name: ${{ inputs.name }}
