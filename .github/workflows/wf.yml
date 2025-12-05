@@ -10,7 +10,8 @@ on:
       environment:
         type: string
         required: true  # name of GH environment (dev/test/prod)
-        
+
+
 jobs:
   greet:
     environment: ${{ inputs.environment }}
