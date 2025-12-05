@@ -4,9 +4,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  call-reusable:
-    uses: ./.github/workflows/wf.yml
-    environment: dev
-    with:
-      person_name: ${{ env.TEST_NAME}}
-      environment: "dev"
+  # This wrapper job sets the environment context
+  setup-and-call:
+    runs-on: ubuntu-latest
+    environment: "dev"  # This gives access to dev environment variables
+    
+    steps:
+      - name: Debug - Show available variables
+        run: |
+          echo "Environment: ${{ vars.TEST_NAME }}"
+          echo "TEST_NAME from env: $TEST_NAME"
+          echo "All env vars containing 'TEST':"
+          env | grep -i test || true
+      
+      - name: Call reusable workflow
+        # Now we can pass the environment variable as input
+        uses: ./.github/workflows/wf.yml
+        with:
+          person_name: ${{ env.TEST_NAME }}  # Use env. not vars.
+          environment: "dev"
